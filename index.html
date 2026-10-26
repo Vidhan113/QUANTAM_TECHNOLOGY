@@ -1,0 +1,543 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>V Tech — Ultimate Science Academy</title>
+<style>
+:root{--bg:#07111f;--panel:#101f32;--line:#2b4360;--text:#edf5ff;--muted:#b1c0d3;--a:#55e6c1;--b:#86aaff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px Arial,sans-serif}
+header{padding:20px 5%;background:#091626;border-bottom:1px solid var(--line)}
+.brand{font-size:24px;font-weight:bold;letter-spacing:3px;color:var(--a)}
+nav{display:flex;flex-wrap:wrap;gap:16px;margin-top:17px}
+nav a{color:var(--text);text-decoration:none;font-size:13px}
+nav a:hover{color:var(--a)}
+.hero{padding:70px 7%;background:radial-gradient(ellipse at 85% 10%,#234c77,#07111f 65%)}
+.hero h1{font-size:clamp(38px,7vw,75px);margin:14px 0}
+.hero p,.muted{color:var(--muted);line-height:1.8}
+.kicker{font-size:12px;color:var(--a);letter-spacing:2px;text-transform:uppercase}
+main{max-width:1250px;margin:auto;padding:20px 5% 60px}
+section{padding:30px 0;scroll-margin-top:20px}
+h2{font-size:30px;margin-bottom:8px}
+h3{line-height:1.4}
+.intro{color:var(--muted);line-height:1.8;max-width:900px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:18px}
+.card,.panel{background:linear-gradient(145deg,#142840,#0c192a);border:1px solid var(--line);border-radius:14px;padding:20px}
+.card p{color:var(--muted);font-size:14px;line-height:1.7}
+.tag{color:var(--a);font-size:11px;letter-spacing:1.4px;text-transform:uppercase}
+button,.btn{display:inline-block;padding:11px 15px;border:0;border-radius:8px;background:var(--a);color:#07151d;text-decoration:none;font-weight:bold;cursor:pointer}
+button:hover,.btn:hover{filter:brightness(1.1)}
+input,select,textarea{width:100%;padding:12px;margin:6px 0 14px;border:1px solid var(--line);border-radius:8px;background:#091626;color:white;font:inherit}
+label{color:var(--muted);font-size:13px}
+.reader{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:20px 0}
+.reader-head{padding:22px;background:#132741}
+.reader-body{padding:clamp(18px,4vw,40px);background:#0b1829}
+.reader-body h3{margin-top:30px;color:var(--a)}
+.reader-body p,.reader-body li{line-height:1.9;color:#d8e4f3}
+.reader-body .formula{background:#152b42;padding:14px;border-left:3px solid var(--a);font-size:18px;overflow-wrap:anywhere}
+.reader-body .example{background:#132b30;padding:14px;border-radius:9px;line-height:1.8}
+.reader-body .warning{background:#32291c;border-left:3px solid #ffc86b;padding:14px;line-height:1.8}
+.reader-body details{padding:12px;border:1px solid var(--line);border-radius:8px;margin:12px 0}
+.reader-body summary{cursor:pointer;color:var(--a)}
+.stat{font-size:25px;color:var(--a);font-weight:bold;margin:10px 0}
+.bar{height:10px;background:#263b53;border-radius:9px;overflow:hidden;margin:8px 0}
+.fill{height:100%;background:var(--a);width:50%}
+canvas{width:100%;height:220px;background:#06101c;border-radius:10px;margin:10px 0}
+.small{font-size:12px;color:var(--muted);line-height:1.7}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+footer{text-align:center;padding:30px;border-top:1px solid var(--line);color:var(--muted)}
+@media(max-width:600px){.hero{padding:40px 6%}h2{font-size:25px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">V TECH</div>
+  <div class="small">ULTIMATE SCIENCE • QUANTUM ACADEMY • FUTURE TECHNOLOGY</div>
+  <nav>
+    <a href="#home">Home</a><a href="#quantum">Quantum Academy</a>
+    <a href="#lab">Physics Lab</a><a href="#library">Book Library</a>
+    <a href="#scientists">Scientists</a><a href="#fiction">Sci-Fi</a>
+  </nav>
+</header>
+
+<div class="hero" id="home">
+  <div class="kicker">Your personal science universe</div>
+  <h1>Question everything.<br>Explore the universe.</h1>
+  <p>From school science to university physics, from atoms to galaxies:
+  learn the concepts, explore equations, run simulations and discover the science
+  behind tomorrow's technology.</p>
+  <a class="btn" href="#quantum">Start Learning</a>
+  <a class="btn" href="#library">Explore Books</a>
+</div>
+
+<main>
+<section id="quantum">
+  <div class="kicker">01 / Deep learning</div>
+  <h2>Quantum Physics Academy</h2>
+  <p class="intro">Select a chapter to read its detailed lesson. Every lesson is organized
+  into an introduction, core explanation, mathematics, examples, applications,
+  common misconceptions and revision questions.</p>
+  <input id="topicSearch" placeholder="Search quantum chapters...">
+  <div class="grid" id="topicList"></div>
+  <div class="reader" id="reader">
+    <div class="reader-head">
+      <div class="kicker" id="topicLevel">BEGINNER</div>
+      <h2 id="topicTitle">What is Quantum Physics?</h2>
+      <p class="muted" id="topicSummary"></p>
+    </div>
+    <div class="reader-body" id="topicContent"></div>
+  </div>
+</section>
+
+<section id="lab">
+  <div class="kicker">02 / Practical learning</div>
+  <h2>Interactive Physics Lab</h2>
+  <p class="intro">Use these calculators and visual models to understand the relationships
+  between physical quantities. They are educational simulations, not laboratory measurements.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Qubit Probability Simulator</h3>
+      <label>State angle θ: <span id="thetaValue">90</span>°</label>
+      <input id="theta" type="range" min="0" max="180" value="90">
+      <div>Outcome 0</div><div class="stat" id="p0">50%</div>
+      <div class="bar"><div class="fill" id="bar0"></div></div>
+      <div>Outcome 1</div><div class="stat" id="p1">50%</div>
+      <div class="bar"><div class="fill" id="bar1"></div></div>
+      <button id="measure">Simulate measurement</button>
+      <p id="measureResult" class="small">No measurement yet.</p>
+      <p class="small">p₀ = cos²(θ/2), p₁ = sin²(θ/2). This is a simplified pure-qubit model.</p>
+    </div>
+    <div class="card">
+      <h3>Wave Simulator</h3>
+      <label>Amplitude</label><input id="amp" type="range" min="10" max="90" value="45">
+      <label>Frequency</label><input id="freq" type="range" min="1" max="10" value="3">
+      <canvas id="wave" width="800" height="220"></canvas>
+      <p class="small">Illustrative sine wave. The sliders change its amplitude and spatial frequency.</p>
+    </div>
+    <div class="card">
+      <h3>Gravity Calculator</h3>
+      <label>Mass 1 (kg)</label><input id="m1" type="number" value="10" min="0">
+      <label>Mass 2 (kg)</label><input id="m2" type="number" value="20" min="0">
+      <label>Distance between centres (m)</label><input id="dist" type="number" value="2" min="0.001">
+      <button id="gravityBtn">Calculate</button>
+      <div class="stat" id="gravityResult">Force: —</div>
+      <p class="small">F = Gm₁m₂/r², where G ≈ 6.6743 × 10⁻¹¹ N·m²/kg².</p>
+    </div>
+    <div class="card">
+      <h3>Speed Calculator</h3>
+      <label>Distance (m)</label><input id="distance" type="number" value="100" min="0">
+      <label>Time (s)</label><input id="time" type="number" value="20" min="0.001">
+      <button id="speedBtn">Calculate</button>
+      <div class="stat" id="speedResult">Speed: —</div>
+      <p class="small">Average speed = total distance ÷ total time.</p>
+    </div>
+    <div class="card">
+      <h3>Kinetic Energy</h3>
+      <label>Mass (kg)</label><input id="mass" type="number" value="2" min="0">
+      <label>Speed (m/s)</label><input id="velocity" type="number" value="5" min="0">
+      <button id="energyBtn">Calculate</button>
+      <div class="stat" id="energyResult">Energy: —</div>
+      <p class="small">For classical motion, KE = ½mv².</p>
+    </div>
+    <div class="card">
+      <h3>Free-Fall Calculator</h3>
+      <label>Height (metres)</label><input id="height" type="number" value="10" min="0">
+      <button id="fallBtn">Calculate time</button>
+      <div class="stat" id="fallResult">Time: —</div>
+      <p class="small">Ideal model: t = √(2h/g), assuming no air resistance and g = 9.81 m/s².</p>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>Safe practical experiment: toy car and ramp</h3>
+    <ol>
+      <li>Use a small toy car and a low, stable ramp.</li>
+      <li>Mark a measured distance on a clear, level surface.</li>
+      <li>Release the car without pushing it and time its travel.</li>
+      <li>Repeat several trials and calculate average speed.</li>
+      <li>Compare the results and discuss timing error and friction.</li>
+    </ol>
+    <p class="small">Keep the ramp low and the area clear. Do not use heavy objects or dangerous equipment.</p>
+  </div>
+</section>
+
+<section id="library">
+  <div class="kicker">03 / Books and resources</div>
+  <h2>Science Book Library</h2>
+  <p class="intro">Find school textbooks, college textbooks and free educational resources.
+  The NCERT portal lets you select your class and subject. Publisher sites control the availability
+  and terms of each book.</p>
+  <input id="bookSearch" placeholder="Search books, class, subject or level...">
+  <select id="bookFilter">
+    <option value="all">All resources</option><option value="school">Classes 6–12</option>
+    <option value="physics">Physics</option><option value="chemistry">Chemistry</option>
+    <option value="biology">Biology</option><option value="college">College</option>
+    <option value="quantum">Quantum physics</option>
+  </select>
+  <div class="grid" id="bookList"></div>
+</section>
+
+<section id="scientists">
+  <div class="kicker">04 / Great minds</div>
+  <h2>Scientists and Classic Books</h2>
+  <div class="grid" id="scientistList"></div>
+</section>
+
+<section id="fiction">
+  <div class="kicker">05 / Imagine tomorrow</div>
+  <h2>Science Fiction Universe</h2>
+  <p class="intro">Original fictional story concepts inspired by science. These are creative ideas,
+  not reports of real events or established scientific discoveries.</p>
+  <div class="grid">
+    <article class="card"><div class="tag">01 / Quantum</div><h3>The Quantum Door</h3><p>A student discovers a strange machine that displays possible futures. The challenge is learning the difference between a probability and a certainty.</p></article>
+    <article class="card"><div class="tag">02 / Space</div><h3>Mission Europa</h3><p>A research crew explores an icy moon to investigate whether its hidden ocean could support life.</p></article>
+    <article class="card"><div class="tag">03 / Astronomy</div><h3>The Last Starship</h3><p>A generation ship must use observations of distant stars to solve a navigation mystery.</p></article>
+    <article class="card"><div class="tag">04 / Robotics</div><h3>Memory of Mars</h3><p>A robotic explorer detects an unusual signal and investigates whether its origin is natural.</p></article>
+    <article class="card"><div class="tag">05 / Relativity</div><h3>Beyond the Event Horizon</h3><p>A crew studies a black hole and confronts the limits of observation and communication.</p></article>
+    <article class="card"><div class="tag">06 / Earth</div><h3>Earth 2300</h3><p>Young scientists design a future city powered by clean energy and ecological restoration.</p></article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <h3>V TECH</h3>
+  Learn • Question • Experiment • Discover
+  <p class="small">Science education project. Simulations are simplified; external websites have their own terms and availability.</p>
+</footer>
+
+<script>
+const lessons = [
+{
+title:"1. Introduction to Quantum Physics",level:"BEGINNER",
+summary:"Why classical physics is not enough to explain atoms, light and microscopic systems.",
+sections:[
+["1. What is quantum physics?",
+`Quantum physics is the branch of physics that describes matter and energy at atomic and subatomic scales. It helps explain how electrons occupy atomic states, how atoms emit light, why materials have particular properties and how devices such as lasers and semiconductor chips work.
+<br><br>Everyday objects often behave approximately according to classical physics. A thrown ball can usually be described by its position, velocity and forces. At very small scales, however, experiments reveal phenomena that classical models cannot fully explain. Light transfers energy in discrete packets, atomic energies occur in allowed levels, and quantum systems can show interference patterns.
+<br><br>The word <b>quantum</b> refers to discrete amounts in contexts where a physical quantity has quantized values. A photon is a quantum of electromagnetic radiation. Not every physical quantity is always discrete: the details depend on the system and observable.`],
+["2. The history and key discoveries",
+`Around the beginning of the twentieth century, scientists were investigating blackbody radiation, the photoelectric effect and atomic spectra. Max Planck introduced quantized energy exchanges in his model of blackbody radiation. Albert Einstein explained the photoelectric effect using light quanta. Niels Bohr developed an early model of atomic energy levels.
+<br><br>Later, Louis de Broglie proposed matter waves; Werner Heisenberg developed matrix mechanics and the uncertainty principle; Erwin Schrödinger developed wave mechanics; and Max Born clarified the probabilistic interpretation of the wave function. Paul Dirac helped unify quantum mechanics with special relativity in important frameworks.
+<br><br>Quantum theory grew through experiments and mathematical development. No single scientist invented every part of it.`],
+["3. The central ideas",
+`First, a quantum system is represented by a state, often written as a ket such as |ψ⟩. The state is used to calculate the probabilities of different measurement outcomes.
+<br><br>Second, observable quantities such as energy and angular momentum are represented mathematically by operators. A measurement can return an allowed eigenvalue of the relevant operator.
+<br><br>Third, quantum states can interfere. The probability of an outcome depends on amplitudes, and amplitudes can reinforce or cancel one another. This is different from simply adding ordinary probabilities.
+<br><br>Fourth, quantum predictions are probabilistic. The theory predicts the distribution of outcomes for repeated measurements, even when a particular individual outcome cannot be predicted with certainty.`],
+["4. Mathematical foundations",
+`Complex numbers, vectors, linear algebra, calculus and differential equations are important for advanced quantum mechanics. A simple state can be represented as a normalized vector. Normalization ensures that all possible measurement probabilities sum to one.
+<br><br>For a wave function ψ(x), the quantity |ψ(x)|² is interpreted as a probability density for position in the standard position representation. Integrating that density over a region gives the probability of finding the particle in that region.
+<br><br>Quantum mathematics is not merely decorative notation: it gives numerical predictions that can be tested against experiments.`],
+["5. Applications",
+`Quantum theory explains atomic structure and chemical bonding, and supports technologies including transistors, integrated circuits, LEDs, lasers, atomic clocks and many medical imaging methods. Quantum mechanics also underpins modern materials science and helps researchers investigate superconductors and other complex systems.
+<br><br>Quantum computing is a developing application, but it does not mean every computation becomes faster. Quantum advantages depend on the task, the algorithm and the hardware.`],
+["6. Common misunderstandings",
+`Quantum physics does not establish that human thoughts can freely control reality. The observer in quantum experiments does not have to be a conscious person; measurement involves physical interaction and a defined measurement procedure.
+<br><br>Quantum uncertainty is not simply the same as poor instruments. The uncertainty principle places a mathematical constraint on the spreads of certain pairs of observables in a quantum state. Quantum physics is strange compared with everyday intuition, but it is a precise, experimentally tested framework.`],
+["7. Revision questions",
+`1. What kinds of systems does quantum physics describe?
+<br>2. What is a photon?
+<br>3. What does a wave function help us calculate?
+<br>4. Name two technologies based on quantum theory.
+<br>5. Why is quantum probability different from saying that anything can happen?`]
+]},
+{
+title:"2. Wave-Particle Duality",level:"BEGINNER",
+summary:"How light and matter produce interference and localized detection events.",
+sections:[
+["1. The central idea",
+`Wave-particle duality is the name given to the fact that quantum objects cannot always be described adequately using only classical particle or classical wave pictures. Light produces interference and diffraction, which are characteristic wave effects, but light is detected through individual photon interactions. Electrons can also produce interference patterns, although their detections occur as localized events.
+<br><br>It is more accurate to say that quantum objects follow quantum rules, which can produce wave-like or particle-like experimental results. A photon is not simply a tiny classical ball that secretly behaves like a water wave.`],
+["2. The double-slit experiment",
+`Imagine a source sending light or electrons toward a barrier with two narrow openings. A detection screen sits behind the barrier. If the experimental arrangement preserves the relevant coherence, contributions from the two paths can interfere. Repeated detections build up a pattern containing bright and dark regions.
+<br><br>Even when particles are sent one at a time, individual impacts appear as separate events, while many events can form an interference pattern. If reliable which-path information is recorded, interference between the paths is reduced or lost. This depends on the complete physical setup, not on a person's awareness of the result.`],
+["3. De Broglie wavelength",
+`Louis de Broglie proposed that matter has a wavelength related to its momentum. This relation is important for electrons, atoms and other quantum systems. For an ordinary object moving slowly compared with the speed of light, momentum is approximately mass multiplied by velocity.
+<br><br>As an object's momentum increases, its de Broglie wavelength decreases. For a macroscopic object, the wavelength is usually so small that wave effects are difficult to notice. Electron diffraction experiments provide direct evidence of matter-wave behaviour.`],
+["4. Formula and worked example",
+`The de Broglie wavelength is λ = h/p, where λ is wavelength, h is Planck's constant and p is momentum. At non-relativistic speeds, p ≈ mv.
+<br><br>For an electron with momentum 1.0 × 10⁻²⁴ kg·m/s, using h ≈ 6.626 × 10⁻³⁴ J·s gives λ ≈ 6.626 × 10⁻¹⁰ m. This is on an atomic scale, where diffraction can be significant.
+<br><br>The example assumes the supplied momentum is known and uses the non-relativistic de Broglie relation.`],
+["5. Why it matters",
+`Electron microscopes use the short wavelengths associated with energetic electrons to resolve details that visible-light microscopes cannot easily resolve. Diffraction methods help scientists determine structures of crystals and molecules. Wave-particle duality is therefore a practical feature of technology, not only a philosophical puzzle.`],
+["6. Revision questions",
+`1. What does duality mean in quantum physics?
+<br>2. What pattern can two slits produce?
+<br>3. State the de Broglie relation.
+<br>4. Why are matter-wave effects harder to observe for everyday objects?
+<br>5. How is electron diffraction used in science?`]
+]},
+{
+title:"3. Superposition and Measurement",level:"BEGINNER",
+summary:"Quantum states, amplitudes, basis states and the probabilities of measurements.",
+sections:[
+["1. Understanding superposition",
+`A quantum state can be expressed as a linear combination of basis states. For a two-level system, a normalized state can be written |ψ⟩ = α|0⟩ + β|1⟩, where α and β are generally complex numbers and |α|² + |β|² = 1.
+<br><br>The coefficients α and β are probability amplitudes. If the system is measured in the basis represented by |0⟩ and |1⟩, the corresponding probabilities are |α|² and |β|². A superposition is not merely ordinary uncertainty about a classical value: amplitudes can interfere, which can affect later experimental results.`],
+["2. Measurement",
+`A measurement is a physical process that connects a quantum system to a measuring apparatus and produces a recorded result. In the standard textbook description, a measurement of a chosen observable yields one of its allowed eigenvalues. The Born rule determines the probability of each outcome from the state and measurement.
+<br><br>After a measurement, the state assigned to the system depends on the measurement and outcome. More advanced quantum theory studies how this connects to interactions, decoherence and the measurement problem. Different interpretations explain the formalism in different ways, while agreeing on many standard experimental predictions.`],
+["3. Worked example",
+`Consider |ψ⟩ = (|0⟩ + |1⟩)/√2. The two amplitudes are both 1/√2. Squaring their magnitudes gives a probability of 1/2 for each outcome.
+<br><br>If the same preparation and measurement are repeated many times, results should approach an approximately equal distribution, allowing for statistical fluctuations. The model predicts probabilities, not a guaranteed alternating sequence such as 0, 1, 0, 1.
+<br><br>If the state is instead |0⟩, the ideal measurement in this same basis gives outcome 0 with probability 1.`],
+["4. Superposition in technology",
+`Quantum computers use carefully prepared states and quantum gates to create and manipulate superpositions. Interference among amplitudes is part of how quantum algorithms work. However, a qubit does not simply store two ordinary answers that can both be read out at will: a measurement in a particular basis returns one result.
+<br><br>Preparing states, controlling errors and reliably measuring outcomes are major challenges in practical quantum computing.`],
+["5. Misconceptions and revision",
+`Superposition does not mean that every imagined possibility exists in a way that can be freely accessed. It is a mathematical feature of a quantum state that makes specific predictions for measurements.
+<br><br>Questions: What is a probability amplitude? What condition normalizes a two-state qubit? How do amplitudes differ from probabilities? What does a single measurement reveal?`]
+]},
+{
+title:"4. The Uncertainty Principle",level:"INTERMEDIATE",
+summary:"Why certain quantum observables cannot have arbitrarily small spreads in the same state.",
+sections:[
+["1. The principle",
+`Heisenberg's uncertainty principle states that some pairs of observables, such as position and momentum, cannot both have arbitrarily small statistical spreads in the same quantum state. For position x and momentum p along the same axis, the relation is ΔxΔp ≥ ℏ/2, where Δ represents standard deviation and ℏ = h/(2π).
+<br><br>This is a property of quantum states and the mathematical structure of observables. It is not just a statement that our tools are too weak or that a measurement accidentally disturbs a previously known value. Measurement disturbance is a related topic, but it is not identical to the standard preparation uncertainty relation.`],
+["2. What the equation means",
+`If a quantum state is very narrowly localized in position, its momentum distribution must be broad enough to satisfy the inequality. A state with a very narrow momentum spread cannot also have an arbitrarily narrow position spread.
+<br><br>The inequality gives a lower bound. It does not say every state reaches that bound. Certain Gaussian wave packets can saturate the position-momentum relation under appropriate conditions, while other states have larger uncertainty products.`],
+["3. Numerical example",
+`Suppose a particle's position uncertainty is Δx = 1.0 × 10⁻¹⁰ m. The minimum momentum uncertainty allowed by the relation is Δp ≥ ℏ/(2Δx).
+<br><br>Using ℏ ≈ 1.055 × 10⁻³⁴ J·s, this gives Δp ≥ about 5.28 × 10⁻²⁵ kg·m/s. The units are momentum units because a joule-second divided by a metre is kg·m/s.
+<br><br>This is an illustrative calculation; it does not describe a particular laboratory particle unless its state and measurement context are specified.`],
+["4. Why it matters",
+`The uncertainty principle helps explain why electrons in atoms cannot be understood as tiny planets following precise classical orbits. Confining a quantum particle to a small region has consequences for its momentum distribution and kinetic energy.
+<br><br>Uncertainty relations also appear in quantum optics, quantum information and precision measurement. They set fundamental constraints that must be considered alongside practical noise and instrument limitations.`],
+["5. Revision questions",
+`1. Write the position-momentum uncertainty relation.
+<br>2. What does Δ mean?
+<br>3. Is the uncertainty principle simply a bad-instrument effect?
+<br>4. Why can confinement affect a particle's kinetic energy?
+<br>5. What is the difference between uncertainty and measurement disturbance?`]
+]},
+{
+title:"5. Schrödinger Equation and Wave Functions",level:"INTERMEDIATE",
+summary:"How the quantum state evolves and how wave functions produce measurement probabilities.",
+sections:[
+["1. Wave function",
+`In a common formulation of non-relativistic quantum mechanics, a wave function ψ(x,t) describes a pure state in the position representation. It can be complex-valued. The wave function is not generally interpreted as a physical water-like wave spreading through space; rather, its mathematical properties are used to calculate measurable probabilities and other predictions.
+<br><br>The probability density for finding a particle near position x is |ψ(x,t)|². The probability of finding it within an interval is obtained by integrating this density over the interval. For a normalized state, the total probability over all allowed positions is one.`],
+["2. The time-dependent equation",
+`The time-dependent Schrödinger equation is iℏ ∂ψ/∂t = Ĥψ. Here i is the imaginary unit, ℏ is the reduced Planck constant and Ĥ is the Hamiltonian operator, representing the system's total energy in the standard formulation.
+<br><br>For a single non-relativistic particle moving in one dimension in a potential V(x), a common form is iℏ ∂ψ/∂t = [−ℏ²/(2m) ∂²/∂x² + V(x)]ψ. The first operator term represents kinetic energy and the potential term represents potential energy.
+<br><br>The equation requires appropriate initial or boundary conditions. Its solutions depend on the physical system and the potential energy function.`],
+["3. Energy levels",
+`For systems with time-independent Hamiltonians, one can often solve an energy eigenvalue equation Ĥφ = Eφ. The allowed solutions and energies depend on the system and its boundary conditions. In bound systems, energy levels are often discrete.
+<br><br>For example, an ideal particle confined in a one-dimensional infinite potential well has quantized energy levels. Real atoms require more detailed models, including interactions and quantum numbers, but the basic lesson is that boundary conditions can restrict the allowed energies.`],
+["4. Why this equation is useful",
+`The Schrödinger equation is used to calculate atomic orbitals, model simple molecules, understand quantum wells and investigate tunnelling. Computational chemistry uses numerical methods related to quantum mechanics to estimate molecular structures, energy levels and reaction behaviour.
+<br><br>For systems involving very high speeds or particle creation and annihilation, the ordinary non-relativistic Schrödinger equation is not the complete framework; relativistic quantum theory or quantum field theory may be needed.`],
+["5. Revision questions",
+`1. What does |ψ|² represent in position space?
+<br>2. What does the Hamiltonian represent?
+<br>3. Why are boundary conditions important?
+<br>4. What is an energy eigenvalue?
+<br>5. Name one situation where the non-relativistic equation is insufficient.`]
+]},
+{
+title:"6. Quantum Tunnelling",level:"INTERMEDIATE",
+summary:"How a quantum particle can have a nonzero transmission probability through a potential barrier.",
+sections:[
+["1. Classical versus quantum picture",
+`In classical mechanics, a particle with energy below a barrier's height cannot pass over that barrier if no additional energy is supplied. Quantum mechanics predicts a different possibility: a wave function can extend into a classically forbidden region, and a finite barrier can permit a nonzero transmission probability.
+<br><br>This phenomenon is called quantum tunnelling. It does not mean a particle has been shown to drill a literal hole through a wall. It is a result of solving the quantum problem with a potential barrier and matching the wave function across different regions.`],
+["2. What controls tunnelling?",
+`For a simple rectangular barrier, transmission depends strongly on the barrier width, barrier height and particle energy. A wider or higher barrier generally suppresses tunnelling. The particle's mass also matters: for comparable conditions, heavier particles typically tunnel less readily.
+<br><br>For a simplified barrier where the particle energy E is below barrier height V₀, the wave function inside the barrier has an exponential character. The approximate decay constant is κ = √[2m(V₀−E)]/ℏ. This helps explain why transmission decreases rapidly as barrier width increases.`],
+["3. Applications in the real world",
+`Tunnelling is important in scanning tunnelling microscopes, which use a tunnelling current between a sharp tip and a conducting surface to investigate surface structure. It also contributes to nuclear alpha decay and plays a role in some semiconductor devices.
+<br><br>In stars, quantum tunnelling contributes to the probability of nuclear fusion processes occurring despite electrostatic repulsion. The full rate of a fusion reaction depends on several factors, not tunnelling alone.`],
+["4. Limits of the simple model",
+`The rectangular barrier is a teaching model. Real barriers can have complicated shapes, particles can interact with their environment, and several dimensions or many particles may need to be considered. A tunnelling probability is not a guarantee that a particular particle will cross a barrier.
+<br><br>Questions: What is a potential barrier? Which factors affect tunnelling? How does a scanning tunnelling microscope use tunnelling current? Why is tunnelling probability not certainty?`]
+]},
+{
+title:"7. Entanglement and Quantum Information",level:"ADVANCED",
+summary:"Correlations between systems that cannot be represented as independent pure states.",
+sections:[
+["1. What is entanglement?",
+`Entanglement is a property of a joint quantum state that prevents it from being expressed as a product of independent states for its subsystems. For example, two qubits can be prepared in the Bell state (|00⟩ + |11⟩)/√2. Measurements of both qubits in the computational basis produce correlated results.
+<br><br>Neither qubit alone has a definite pure state in this example, but the pair has a well-defined joint state. The correlations are stronger than what certain classical local hidden-variable models can reproduce, as tested through Bell inequalities under suitable experimental conditions.`],
+["2. Does entanglement send messages faster than light?",
+`No. Entanglement does not allow a person to send a controllable message faster than light. Each observer's local results are random in the standard Bell-state example. The correlation becomes evident only when the results are compared through an ordinary communication channel.
+<br><br>This distinction is important: quantum correlations are unusual, but they do not violate the no-signalling principle of standard quantum mechanics.`],
+["3. Quantum information",
+`Quantum information theory studies how information can be encoded and processed using quantum systems. A qubit is described by a quantum state and can be manipulated with quantum gates. Entanglement can serve as a resource for protocols such as quantum teleportation of a quantum state, which requires shared entanglement and classical communication.
+<br><br>Quantum teleportation does not transport a physical person or send a usable message instantly. It is a technical protocol for transferring a state under defined conditions.`],
+["4. Practical challenges",
+`Real quantum devices suffer from noise, unwanted interactions and errors. Researchers develop error-correction codes, better control systems and improved materials to preserve fragile quantum information.
+<br><br>Questions: What makes a state entangled? What do Bell tests investigate? Why is entanglement not a faster-than-light messaging system? What is the role of error correction?`]
+]},
+{
+title:"8. Quantum Computing and Qubits",level:"ADVANCED",
+summary:"Qubit states, gates, interference, algorithms and the limits of current hardware.",
+sections:[
+["1. Bits and qubits",
+`A classical bit stores one of two values, 0 or 1. A qubit is a quantum system with two chosen basis states, commonly labelled |0⟩ and |1⟩. A pure qubit can be written α|0⟩ + β|1⟩, with complex amplitudes satisfying |α|² + |β|² = 1.
+<br><br>Measuring in the computational basis produces 0 with probability |α|² and 1 with probability |β|². Although a qubit can be in a superposition, measurement does not reveal both amplitudes directly from one outcome.`],
+["2. Quantum gates",
+`Quantum gates are controlled transformations of quantum states. The X gate swaps the computational basis states, while the Hadamard gate maps |0⟩ to an equal superposition of |0⟩ and |1⟩. Phase gates change relative phases, which can influence later interference.
+<br><br>Quantum circuits combine gates, entangling operations and measurements. Relative phase matters because two states with identical measurement probabilities in one basis can behave differently after another gate and measurement.`],
+["3. What quantum computers are good at",
+`Certain quantum algorithms offer theoretical advantages for particular tasks. Shor's algorithm can factor integers efficiently in an ideal large fault-tolerant quantum computer. Grover's algorithm offers a quadratic query improvement for unstructured search under its query model.
+<br><br>These results do not mean a quantum computer is faster for every problem. Current devices are limited by noise, scale, connectivity, control and error-correction overhead. Classical computers remain better for many everyday tasks.`],
+["4. How to start learning",
+`A useful progression is complex numbers, vectors, matrices, probability, basic programming, quantum states, single-qubit gates, two-qubit gates, measurement and circuits. Simulators allow learners to explore small circuits before using real quantum hardware.
+<br><br>Quantum computing combines physics, mathematics, computer science and engineering. Understanding the limitations is as important as learning the exciting possibilities.`],
+["5. Revision questions",
+`1. What is the difference between a bit and a qubit?
+<br>2. What does the Hadamard gate do to |0⟩?
+<br>3. Why does relative phase matter?
+<br>4. Name one algorithm associated with quantum advantage.
+<br>5. Why are current quantum computers not universal replacements for classical computers?`]
+]}
+];
+
+function addCard(root,tag,title,desc,action){
+ const c=document.createElement("article");c.className="card";
+ const t=document.createElement("div");t.className="tag";t.textContent=tag;
+ const h=document.createElement("h3");h.textContent=title;
+ const p=document.createElement("p");p.textContent=desc;
+ c.append(t,h,p);
+ if(action){const a=document.createElement("button");a.textContent="Read full chapter";a.onclick=action;c.append(a)}
+ root.append(c);
+}
+function openLesson(i){
+ const x=lessons[i];
+ document.getElementById("topicLevel").textContent=x.level;
+ document.getElementById("topicTitle").textContent=x.title;
+ document.getElementById("topicSummary").textContent=x.summary;
+ const root=document.getElementById("topicContent");root.replaceChildren();
+ x.sections.forEach((s,j)=>{
+  const h=document.createElement("h3");h.textContent=s[0];
+  const p=document.createElement("p");p.innerHTML=s[1];
+  root.append(h,p);
+  if(j===0 && i===0){
+   const f=document.createElement("div");f.className="formula";
+   f.textContent="Quantum state: |ψ⟩     Probability: |amplitude|²";
+   root.append(f);
+  }
+ });
+ const rev=document.createElement("div");rev.className="panel";
+ rev.innerHTML="<h3>Study method</h3><p>Read one section, write its main idea in your own words, work through the equations, and answer the revision questions without looking at the notes.</p>";
+ root.append(rev);
+ document.getElementById("reader").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function renderTopics(){
+ const q=document.getElementById("topicSearch").value.toLowerCase();
+ const root=document.getElementById("topicList");root.replaceChildren();
+ lessons.forEach((x,i)=>{
+  if((x.title+" "+x.level+" "+x.summary).toLowerCase().includes(q))
+   addCard(root,x.level,x.title,x.summary,()=>openLesson(i));
+ });
+}
+document.getElementById("topicSearch").addEventListener("input",renderTopics);
+renderTopics();openLesson(0);
+
+const theta=document.getElementById("theta");
+function updateQubit(){
+ const r=Number(theta.value)*Math.PI/180;
+ const p0=Math.cos(r/2)**2,p1=Math.sin(r/2)**2;
+ document.getElementById("thetaValue").textContent=theta.value;
+ document.getElementById("p0").textContent=(100*p0).toFixed(1)+"%";
+ document.getElementById("p1").textContent=(100*p1).toFixed(1)+"%";
+ document.getElementById("bar0").style.width=(100*p0)+"%";
+ document.getElementById("bar1").style.width=(100*p1)+"%";
+}
+theta.addEventListener("input",updateQubit);updateQubit();
+document.getElementById("measure").onclick=()=>{
+ const p0=Math.cos(Number(theta.value)*Math.PI/360)**2;
+ document.getElementById("measureResult").textContent="Simulated outcome: "+(Math.random()<p0?"0":"1");
+};
+function drawWave(){
+ const c=document.getElementById("wave"),ctx=c.getContext("2d");
+ const a=Number(document.getElementById("amp").value),f=Number(document.getElementById("freq").value);
+ ctx.clearRect(0,0,c.width,c.height);ctx.strokeStyle="#2b4360";
+ ctx.beginPath();ctx.moveTo(0,110);ctx.lineTo(800,110);ctx.stroke();
+ ctx.strokeStyle="#55e6c1";ctx.lineWidth=3;ctx.beginPath();
+ for(let x=0;x<=800;x++){let y=110-a*Math.sin(x*f*2*Math.PI/800);if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)}
+ ctx.stroke();
+}
+document.getElementById("amp").oninput=drawWave;
+document.getElementById("freq").oninput=drawWave;drawWave();
+
+const n=id=>Number(document.getElementById(id).value);
+document.getElementById("gravityBtn").onclick=()=>{
+ const a=n("m1"),b=n("m2"),r=n("dist");
+ document.getElementById("gravityResult").textContent=
+ [a,b,r].every(Number.isFinite)&&a>=0&&b>=0&&r>0?
+ (6.67430e-11*a*b/(r*r)).toExponential(5)+" N":"Check your inputs";
+};
+document.getElementById("speedBtn").onclick=()=>{
+ const d=n("distance"),t=n("time");
+ document.getElementById("speedResult").textContent=
+ Number.isFinite(d)&&Number.isFinite(t)&&d>=0&&t>0?(d/t).toFixed(4)+" m/s":"Check your inputs";
+};
+document.getElementById("energyBtn").onclick=()=>{
+ const m=n("mass"),v=n("velocity");
+ document.getElementById("energyResult").textContent=
+ Number.isFinite(m)&&Number.isFinite(v)&&m>=0&&v>=0?(0.5*m*v*v).toFixed(4)+" J":"Check your inputs";
+};
+document.getElementById("fallBtn").onclick=()=>{
+ const h=n("height");
+ document.getElementById("fallResult").textContent=
+ Number.isFinite(h)&&h>=0?Math.sqrt(2*h/9.81).toFixed(4)+" s":"Check your height";
+};
+
+const books=[
+["NCERT official textbooks","school","Select class 6–12 and your subject on the official portal.","https://ncert.nic.in/textbook.php"],
+["NCERT ePathshala","school","Official textbooks and learning resources.","https://epathshala.nic.in/"],
+["Khan Academy Science","school","Free science lessons and practice.","https://www.khanacademy.org/science"],
+["OpenStax science textbooks","college","Browse free college-level science textbooks.","https://openstax.org/subjects/science"],
+["College Physics 2e","physics college","Introductory college physics.","https://openstax.org/details/books/college-physics-2e"],
+["University Physics Volume 1","physics college","Mechanics and waves.","https://openstax.org/details/books/university-physics-volume-1"],
+["University Physics Volume 2","physics college","Electricity, magnetism and optics.","https://openstax.org/details/books/university-physics-volume-2"],
+["University Physics Volume 3","physics college","Modern physics topics.","https://openstax.org/details/books/university-physics-volume-3"],
+["Chemistry 2e","chemistry college","General chemistry textbook.","https://openstax.org/details/books/chemistry-2e"],
+["Biology 2e","biology college","College biology textbook.","https://openstax.org/details/books/biology-2e"],
+["Quantum physics courses","quantum physics college","Search university-level quantum physics course materials.","https://ocw.mit.edu/search/?q=quantum%20physics"],
+["PhET interactive science","physics chemistry biology","Interactive models and simulations.","https://phet.colorado.edu/"],
+["PhET Physics","physics","Motion, forces, waves and electricity simulations.","https://phet.colorado.edu/en/simulations/filter?subjects=physics"],
+["PhET Chemistry","chemistry","Atoms, molecules and chemical reactions.","https://phet.colorado.edu/en/simulations/filter?subjects=chemistry"]
+];
+function renderBooks(){
+ const q=document.getElementById("bookSearch").value.toLowerCase();
+ const f=document.getElementById("bookFilter").value;
+ const root=document.getElementById("bookList");root.replaceChildren();let count=0;
+ books.filter(b=>(b.join(" ").toLowerCase().includes(q))&&(f==="all"||b[1].split(" ").includes(f)))
+ .forEach(b=>{const c=document.createElement("article");c.className="card";
+ const tag=document.createElement("div");tag.className="tag";tag.textContent=b[1];
+ const h=document.createElement("h3");h.textContent=b[0];
+ const p=document.createElement("p");p.textContent=b[2];
+ const a=document.createElement("a");a.className="btn";a.href=b[3];a.target="_blank";a.rel="noopener noreferrer";a.textContent="Open resource ↗";
+ c.append(tag,h,p,a);root.append(c);count++;
+ });
+ if(!count){const p=document.createElement("p");p.textContent="No matching resources.";root.append(p)}
+}
+document.getElementById("bookSearch").oninput=renderBooks;
+document.getElementById("bookFilter").onchange=renderBooks;renderBooks();
+
+const scientists=[
+["The Chemical History of a Candle","Michael Faraday","A classic science lecture.","https://www.gutenberg.org/ebooks/14474"],
+["Relativity: The Special and General Theory","Albert Einstein","Historic introduction to relativity.","https://www.gutenberg.org/ebooks/5001"],
+["On the Origin of Species","Charles Darwin","Historic work on evolution.","https://www.gutenberg.org/ebooks/1228"],
+["Elements of Chemistry","Antoine Lavoisier","Historic chemistry text.","https://www.gutenberg.org/ebooks/30775"],
+["Project Gutenberg science collection","Multiple authors","Browse public-domain science books.","https://www.gutenberg.org/ebooks/bookshelf/68"],
+["MIT OpenCourseWare","University faculty","Free university course materials.","https://ocw.mit.edu/"]
+];
+const sr=document.getElementById("scientistList");
+scientists.forEach(s=>{
+ const c=document.createElement("article");c.className="card";
+ const t=document.createElement("div");t.className="tag";t.textContent="Science reading";
+ const h=document.createElement("h3");h.textContent=s[0];
+ const p=document.createElement("p");p.textContent=s[1]+" — "+s[2];
+ const a=document.createElement("a");a.className="btn";a.href=s[3];a.target="_blank";a.rel="noopener noreferrer";a.textContent="Read / explore ↗";
+ c.append(t,h,p,a);sr.append(c);
+});
+</script>
+</body>
+</html>
